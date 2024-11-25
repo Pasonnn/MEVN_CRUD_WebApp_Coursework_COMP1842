@@ -1,8 +1,6 @@
 <template>
   <div class="app-container">
-    <transition name="fade-slide">
       <router-view />
-    </transition>
   </div>
 </template>
 
@@ -13,25 +11,20 @@ export default {
 </script>
 
 <style>
-/* General reset for the body and HTML */
+/* Reset styles */
 html, body {
-  height: 100%;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
   width: 100%;
-  overflow: hidden; /* Prevents scrolling */
+  height: 100%;
+  overflow: hidden;
 }
 
-body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f0f0f0;
-}
-
+/* App container */
 .app-container {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,15 +32,11 @@ body {
   top: 0;
   left: 0;
   background-color: #f0f0f0;
+  overflow: hidden;
 }
 
-/* Add transition effects */
-.fade-slide-enter-active, .fade-slide-leave-active {
-  transition: opacity 0.5s ease, transform 0.5s ease;
+.app-container:focus {
+  outline: none;
 }
 
-.fade-slide-enter, .fade-slide-leave-to {
-  opacity: 0;
-  transform: translateX(20px);
-}
 </style>
