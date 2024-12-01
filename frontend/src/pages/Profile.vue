@@ -2,19 +2,25 @@
     <div class="profile">
       <h1>Profile</h1>
   
+      <!-- Profile Information Section -->
       <div v-if="user">
-        <!-- Profile Information -->
         <div class="profile-info">
-          <img v-if="user.avatar" :src="user.avatar" alt="Avatar" class="avatar" />
-          <div v-else class="avatar-placeholder">No Avatar</div>
+          <!-- Avatar Section -->
+          <div class="avatar-section">
+            <!-- Display Avatar if it exists, otherwise show a placeholder -->
+            <img v-if="user.avatar" :src="user.avatar" alt="User Avatar" class="avatar" />
+            <div v-else class="avatar-placeholder">No Avatar</div>
+          </div>
+  
+          <!-- Display User Information -->
           <div class="info">
             <p><strong>Name:</strong> {{ user.name }}</p>
             <p><strong>Email:</strong> {{ user.email }}</p>
           </div>
         </div>
   
-        <!-- Edit Profile Form -->
-        <form @submit.prevent="submitProfileChanges">
+        <!-- Profile Edit Form -->
+        <form @submit.prevent="submitProfileChanges" enctype="multipart/form-data">
           <div class="form-group">
             <label for="name">Edit Name:</label>
             <input type="text" id="name" v-model="name" />
@@ -25,7 +31,7 @@
             <input type="email" id="email" v-model="email" />
           </div>
   
-          <!-- Avatar Upload -->
+          <!-- Avatar Upload Section -->
           <div class="form-group">
             <label for="avatar">Change Avatar:</label>
             <input type="file" id="avatar" @change="handleAvatarChange" />
@@ -35,7 +41,7 @@
           <button type="submit" class="save-button">Save Changes</button>
         </form>
   
-        <!-- Success/Error Message -->
+        <!-- Success/Error Messages -->
         <div v-if="message" class="message" :class="messageType">
           <p>{{ message }}</p>
         </div>
@@ -67,6 +73,7 @@
       this.fetchProfile();
     },
     methods: {
+      // Fetch the user's profile information
       async fetchProfile() {
         try {
           const token = localStorage.getItem('token');
@@ -75,11 +82,11 @@
             return;
           }
   
-          const response = await axios.get('http://localhost:5000/profile', {
+          const response = await axios.get('http://localhost:5000/users/profile', {
             headers: { Authorization: `Bearer ${token}` },
           });
   
-          this.user = response.data;
+          this.user = response.data; // Store user data
           this.name = this.user.name;
           this.email = this.user.email;
         } catch (error) {
@@ -87,10 +94,12 @@
         }
       },
   
+      // Handle avatar file change
       handleAvatarChange(event) {
         this.avatarFile = event.target.files[0];
       },
   
+      // Submit profile changes (name, email, avatar)
       async submitProfileChanges() {
         try {
           const formData = new FormData();
@@ -106,7 +115,7 @@
             return;
           }
   
-          const response = await axios.put('http://localhost:5000/profile', formData, {
+          const response = await axios.put('http://localhost:5000/users/profile', formData, {
             headers: {
               Authorization: `Bearer ${token}`,
               'Content-Type': 'multipart/form-data',
@@ -149,12 +158,16 @@
     margin-bottom: 20px;
   }
   
+  .avatar-section {
+    margin-right: 20px;
+  }
+  
   .avatar {
     width: 100px;
     height: 100px;
     border-radius: 50%;
     object-fit: cover;
-    margin-right: 20px;
+    margin-bottom: 10px;
   }
   
   .avatar-placeholder {

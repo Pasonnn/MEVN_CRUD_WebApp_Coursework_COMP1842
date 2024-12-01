@@ -1,20 +1,21 @@
 // ../middlewares/uploadMiddleware.js
-
 const multer = require('multer');
 const path = require('path');
-const uploadDir = '../uploads/';
-const fs = require('fs')
+const fs = require('fs');
+
+// Define the absolute path for uploads directory
+const uploadDir = path.join(__dirname, '../uploads'); // Absolute path for uploads
 
 // Check if the uploads/ directory exists
 if (!fs.existsSync(uploadDir)) {
-  console.log("Create a /uploads disk")
-  fs.mkdirSync(uploadDir);
+  console.log("Creating uploads directory...");
+  fs.mkdirSync(uploadDir, { recursive: true }); // Create the directory if it doesn't exist
 }
 
 // Configure storage for uploaded files
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // Directory to save uploaded files
+    cb(null, uploadDir); // Use the absolute path for destination
   },
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}-${file.originalname}`); // Unique file name
