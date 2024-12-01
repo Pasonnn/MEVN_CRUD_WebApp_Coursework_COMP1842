@@ -10,9 +10,9 @@ router.get('/', authenticateUser, recordController.getAllRecord);
 
 router.get('/:id', authenticateUser, recordController.getRecordById);
 
-router.put('/:id', authenticateUser, authorizeRoles(['admin']), recordController.updateRecordById);
+router.put('/:id', authenticateUser, recordController.updateRecordById);
 
-router.delete('/:id', authenticateUser, authorizeRoles(['admin']), recordController.deleteRecordById);
+router.delete('/:id', authenticateUser, recordController.deleteRecordById);
 
 router.get('/records/search', authenticateUser, recordController.searchRecords);
 

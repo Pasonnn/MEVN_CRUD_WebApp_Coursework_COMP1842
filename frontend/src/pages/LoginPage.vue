@@ -51,16 +51,20 @@ export default {
   },
   methods: {
     async login() {
-      try {
-        const response = await axios.post('http://localhost:5000/users/login', {
-          email: this.email,
-          password: this.password,
-        });
-        localStorage.setItem('token', response.data.token); // Save token for authenticated requests
-        this.$router.push('/dashboard'); // Redirect to dashboard
-      } catch (err) {
-        this.error = err.response?.data?.message || 'An error occurred';
-      }
+        try {
+            const response = await axios.post('http://localhost:5000/users/login', {
+            email: this.email,
+            password: this.password,
+            });
+
+            // Save the token to localStorage
+            localStorage.setItem('authToken', response.data.token);
+
+            // Redirect to the dashboard
+            this.$router.push('/dashboard');
+        } catch (err) {
+            this.error = err.response?.data?.message || 'An error occurred';
+        }
     },
   },
 };

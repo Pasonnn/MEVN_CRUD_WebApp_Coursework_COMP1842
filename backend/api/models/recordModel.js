@@ -15,7 +15,7 @@ const recordSchema = new mongoose.Schema(
       required: "German is required!",
       trim: true, // Removes leading/trailing spaces
     },
-    france: {
+    french: {
       type: String,
       required: "France is required!",
       trim: true, // Removes leading/trailing spaces
