@@ -119,6 +119,7 @@ export default {
       }
 
       try {
+        console.log("Try to get all record")
         const response = await axios.get('http://localhost:5000/records', {
           headers: {
             Authorization: `Bearer ${token}`, // Send the token in the header

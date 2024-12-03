@@ -2,24 +2,23 @@
     <div class="profile">
       <h1>Profile</h1>
   
-      <!-- Profile Information Section -->
       <div v-if="user">
+        <!-- Profile Information -->
         <div class="profile-info">
-          <!-- Avatar Section -->
+          <!-- Display Avatar if it exists, otherwise show a placeholder -->
           <div class="avatar-section">
-            <!-- Display Avatar if it exists, otherwise show a placeholder -->
-            <img v-if="user.avatar" :src="user.avatar" alt="User Avatar" class="avatar" />
+            <img v-if="user.avatar" :src="`http://localhost:5000${user.avatar}`" alt="Avatar" class="avatar" />
             <div v-else class="avatar-placeholder">No Avatar</div>
           </div>
   
-          <!-- Display User Information -->
+          <!-- User Info Section -->
           <div class="info">
             <p><strong>Name:</strong> {{ user.name }}</p>
             <p><strong>Email:</strong> {{ user.email }}</p>
           </div>
         </div>
   
-        <!-- Profile Edit Form -->
+        <!-- Edit Profile Form -->
         <form @submit.prevent="submitProfileChanges" enctype="multipart/form-data">
           <div class="form-group">
             <label for="name">Edit Name:</label>
@@ -45,6 +44,9 @@
         <div v-if="message" class="message" :class="messageType">
           <p>{{ message }}</p>
         </div>
+  
+        <!-- Sign Out Button -->
+        <button @click="signOut" class="sign-out-button">Sign Out</button>
       </div>
   
       <!-- Loading Spinner -->
@@ -76,21 +78,23 @@
       // Fetch the user's profile information
       async fetchProfile() {
         try {
-          const token = localStorage.getItem('token');
+          const token = localStorage.getItem('token'); // Retrieve token from localStorage
           if (!token) {
-            this.$router.push('/login');
+            this.$router.push('/login'); // Redirect to login if no token
             return;
           }
   
           const response = await axios.get('http://localhost:5000/users/profile', {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: { Authorization: `Bearer ${token}` }, // Send token in header
           });
   
-          this.user = response.data; // Store user data
+          this.user = response.data; // Store the user data
+          console.log("User information: " + this.user);
           this.name = this.user.name;
           this.email = this.user.email;
         } catch (error) {
           console.error('Error fetching profile:', error);
+          alert('Error fetching profile!');
         }
       },
   
@@ -106,12 +110,12 @@
           formData.append('name', this.name);
           formData.append('email', this.email);
           if (this.avatarFile) {
-            formData.append('avatar', this.avatarFile);
+            formData.append('avatar', this.avatarFile); // Attach avatar if provided
           }
   
           const token = localStorage.getItem('token');
           if (!token) {
-            this.$router.push('/login');
+            this.$router.push('/login'); // Redirect to login if no token
             return;
           }
   
@@ -122,7 +126,7 @@
             },
           });
   
-          this.user = response.data.user; // Update the user data
+          this.user = response.data.user; // Update the user data with the response
           this.message = 'Profile updated successfully!';
           this.messageType = 'success';
         } catch (error) {
@@ -130,6 +134,13 @@
           this.message = 'Error updating profile. Please try again.';
           this.messageType = 'error';
         }
+      },
+  
+      // Sign out method to clear token and redirect to login
+      signOut() {
+        localStorage.removeItem('token'); // Remove token from localStorage
+        localStorage.removeItem('userRole'); // Optional: remove user role if stored
+        this.$router.push('/login'); // Redirect to the login page
       },
     },
   };
@@ -167,7 +178,6 @@
     height: 100px;
     border-radius: 50%;
     object-fit: cover;
-    margin-bottom: 10px;
   }
   
   .avatar-placeholder {
@@ -233,6 +243,22 @@
   .message.error {
     background-color: #f8d7da;
     color: #721c24;
+  }
+  
+  /* Style for the Sign Out button */
+  .sign-out-button {
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .sign-out-button:hover {
+    background-color: #c82333;
   }
   </style>
   

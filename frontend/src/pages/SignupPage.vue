@@ -62,7 +62,7 @@ methods: {
         password: this.password,
       });
       localStorage.setItem('token', response.data.token); // Save token for authenticated requests
-      this.$router.push('/dashboard'); // Redirect to dashboard
+      this.$router.push('/login'); // Redirect to dashboard
     } catch (err) {
       this.error = err.response?.data?.message || 'An error occurred';
     }

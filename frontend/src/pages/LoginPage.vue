@@ -53,12 +53,24 @@ export default {
     async login() {
         try {
             const response = await axios.post('http://localhost:5000/users/login', {
-            email: this.email,
-            password: this.password,
+                email: this.email,
+                password: this.password,
             });
 
             // Save the token to localStorage
-            localStorage.setItem('authToken', response.data.token);
+            localStorage.setItem('token', response.data.token);
+
+            // Save the user ID and role to localStorage
+            localStorage.setItem('userId', response.data.user.id);  // Assuming the user ID is in response.data.user.id
+            localStorage.setItem('userRole', response.data.user.role);  // Assuming the role is in response.data.user.role
+
+            const token = localStorage.getItem('token');
+            const userId = localStorage.getItem('userId');  // Retrieve the user ID
+            const role = localStorage.getItem('userRole');  // Retrieve the user role
+
+            console.log("User Token Save: " + token);
+            console.log("User ID Save: " + userId);
+            console.log("User Role Save: " + role);
 
             // Redirect to the dashboard
             this.$router.push('/dashboard');

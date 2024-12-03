@@ -6,6 +6,7 @@ import Words from '../pages/Words.vue';
 import New from '../pages/New.vue';
 import Test from '../pages/Test.vue';
 import Profile from '../pages/Profile.vue';
+import UserManagement from '../pages/UserManagement.vue';
 
 const routes = [
   { path: '/', redirect: '/login' }, // Redirect to login by default
@@ -20,6 +21,7 @@ const routes = [
       { path: 'new', component: New },
       { path: 'test', component: Test },
       { path: 'profile', component: Profile },
+      { path: 'user-management', component: UserManagement },
     ],
   },
 ];
