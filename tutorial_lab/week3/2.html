@@ -1,0 +1,20 @@
+<div id="app"> <!-- Vue instance will control everything within this div -->
+
+    <div class="product">
+  
+      <div class="product-image">
+        <img :src="image" /> <!-- Dynamically bind the image source using Vue's v-bind syntax -->
+      </div>
+  
+      <div class="product-info">
+        <h1>{{ product }}</h1> <!-- Vue will dynamically insert the product name here -->
+        <a :href="link" target="_blank">More details</a> <!-- Dynamically bind the href attribute to the link data -->
+      </div>
+  
+    </div>  
+  </div> 
+  
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+  
+  
+  

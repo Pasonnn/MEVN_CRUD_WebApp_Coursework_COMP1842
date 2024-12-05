@@ -1,0 +1,36 @@
+a {
+    color: red;
+}
+
+h1, h2, p {
+    text-align: right;
+    color: blue;
+}
+
+.red {
+    color: #f33;
+}
+
+.yellow-bg {
+    background: #ffa;
+}
+
+#identified {
+    background-color: skyblue;
+}
+
+div p {
+    background-color: yellow;
+}
+
+div.row * {
+    background-color: yellow;
+}
+
+div + p {
+    background-color: green;
+}
+
+div ~ p {
+    background-color: orange;
+}
