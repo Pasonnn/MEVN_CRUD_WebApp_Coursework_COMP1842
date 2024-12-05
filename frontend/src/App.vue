@@ -35,6 +35,23 @@ html, body {
   box-sizing: border-box; /* Include padding in the width and height calculation */
 }
 
+/* Center login/signup form */
+.login-signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Take full height of the screen */
+}
+
+form {
+  width: 100%;
+  max-width: 400px; /* Form will not grow larger than this width */
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 /* Prevent focus outline for the app container */
 .app-container:focus {
   outline: none;

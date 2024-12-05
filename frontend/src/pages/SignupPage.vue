@@ -1,5 +1,5 @@
 <template>
-  <div class="signup-container">
+  <div class="login-signup-container">
       <div class="left-panel">
           <div class="artwork">
               <!-- Artwork or placeholder for design -->
