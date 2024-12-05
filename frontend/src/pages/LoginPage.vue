@@ -1,5 +1,5 @@
 <template>
-    <div class="login-container">
+    <div class="login-signup-container">
         <div class="left-panel">
             <div class="logo">
                 <img src="../assets/duolingson_logo.png" alt="Your Logo">
