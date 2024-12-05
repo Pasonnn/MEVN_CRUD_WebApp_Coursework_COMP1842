@@ -14,11 +14,22 @@
           <div v-for="(word, index) in testWords" :key="word._id" class="test-word">
             <div class="word-item">
               <h2>{{ word.english }}</h2>
+              
               <label for="german">German:</label>
-              <input type="text" v-model="userAnswers[index].german" required />
-  
+              <input 
+                type="text" 
+                v-model="userAnswers[index].german" 
+                required 
+                placeholder="Enter German translation"
+              />
+              
               <label for="french">French:</label>
-              <input type="text" v-model="userAnswers[index].french" required />
+              <input 
+                type="text" 
+                v-model="userAnswers[index].french" 
+                required 
+                placeholder="Enter French translation"
+              />
             </div>
           </div>
   
@@ -34,11 +45,23 @@
       <!-- Show test results -->
       <div v-if="testResults !== null" class="test-results">
         <h2>Test Results</h2>
-        <p>Correct Answers: {{ correctAnswers }} / {{ testWords.length*2 }}</p>
+        <p>Correct Answers: {{ correctAnswers }} / {{ testWords.length * 2 }}</p>
         <div v-for="(word, index) in testWords" :key="index" class="result-item">
           <h3>{{ word.english }}</h3>
-          <p><strong>German:</strong> Your answer: {{ userAnswers[index].german }} (Correct: {{ word.german }})</p>
-          <p><strong>French:</strong> Your answer: {{ userAnswers[index].french }} (Correct: {{ word.french }})</p>
+  
+          <p :class="{'correct': isCorrect('german', index), 'incorrect': isIncorrect('german', index)}">
+            <strong>German:</strong> Your answer: {{ userAnswers[index].german }} 
+            <span v-if="isCorrect('german', index)" class="fa fa-check-circle correct"></span>
+            <span v-if="isIncorrect('german', index)" class="fa fa-times-circle incorrect"></span>
+            (Correct: {{ word.german }})
+          </p>
+  
+          <p :class="{'correct': isCorrect('french', index), 'incorrect': isIncorrect('french', index)}">
+            <strong>French:</strong> Your answer: {{ userAnswers[index].french }} 
+            <span v-if="isCorrect('french', index)" class="fa fa-check-circle correct"></span>
+            <span v-if="isIncorrect('french', index)" class="fa fa-times-circle incorrect"></span>
+            (Correct: {{ word.french }})
+          </p>
         </div>
       </div>
     </div>
@@ -113,6 +136,20 @@
           }
         });
       },
+  
+      // Check if the answer is correct
+      isCorrect(language, index) {
+        const correctWord = this.testWords[index];
+        const userAnswer = this.userAnswers[index][language];
+        return userAnswer.toLowerCase() === correctWord[language].toLowerCase();
+      },
+  
+      // Check if the answer is incorrect
+      isIncorrect(language, index) {
+        const correctWord = this.testWords[index];
+        const userAnswer = this.userAnswers[index][language];
+        return userAnswer && userAnswer.toLowerCase() !== correctWord[language].toLowerCase();
+      }
     },
   };
   </script>
@@ -159,6 +196,7 @@
     margin-bottom: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    font-size: 16px;
   }
   
   .submit-button {
@@ -191,6 +229,18 @@
   .result-item h3 {
     font-size: 20px;
     margin-bottom: 10px;
+  }
+  
+  .result-item .fa {
+    margin-left: 10px;
+  }
+  
+  .correct {
+    color: green;
+  }
+  
+  .incorrect {
+    color: red;
   }
   </style>
   
